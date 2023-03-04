@@ -103,21 +103,8 @@ class glgformer(nn.Module):
 
         # ------------------- atten-one -----------------------
         decoder_2 = F.interpolate(decoder_1, scale_factor=0.25, mode='bilinear')  # b,c,11,11
-        # cfp_out_1 = self.CFP_3(x4_rfb) # 32 - 32 b,c,11,11
-        # decoder_2_ra = torch.sigmoid(F.avg_pool2d(decoder_2, kernel_size=31, stride=1, padding=15) - decoder_2)
-        # decoder_2_ra = -1*(torch.sigmoid(decoder_2)) + 1
-        # decoder_2_ra = (torch.sigmoid(decoder_2))
-        # decoder_2_ra = decoder_2_ra * self.aa_1(decoder_2_ra)
-        # aa_atten_3 = self.aa_kernel_3(x4_rfb, decoder_2)
         aa_atten_3 = self.aa_kernel_3(x4_rfb, decoder_2)
-        # aa_atten_3 = self.aa_kernel_3(x4_rfb)
-
-        # _, ra_3 = self.attention4(aa_atten_3, decoder_2)
-        # aa_atten_3 = decoder_2_ra.expand(-1, 32, -1, -1).mul(aa_atten_3)
-        # x2 = self.lp_2(x2)
-        # ra_31 = self.lp_3(aa_atten_3)
-        # x4 = self.lp_4(x4)
-        # aa_atten_3 = self.rfb4_11(aa_atten_3)
+        #LGM
         ra_3 = self.ra3_conv1(aa_atten_3)  # 32 - 32
         ra_31 = self.ra3_conv2(ra_3)  # 32 - 32
         ra_31 = self.lp_3(ra_31)
